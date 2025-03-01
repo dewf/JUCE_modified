@@ -2182,6 +2182,17 @@ function(juce_add_plugin target)
     _juce_configure_plugin_targets(${target})
 endfunction()
 
+function(jude_add_staticlib_app target)
+    add_library(${target} STATIC)
+    target_compile_definitions(${target} PRIVATE JUCE_STANDALONE_APPLICATION=1)
+    _juce_initialise_target(${target} ${ARGN})
+    _juce_set_output_name(${target} $<TARGET_PROPERTY:${target},JUCE_PRODUCT_NAME>)
+    set_target_properties(${target} PROPERTIES JUCE_TARGET_KIND_STRING "App")
+    # _juce_configure_bundle(${target} ${target})
+    # _juce_configure_app_bundle(${target} ${target})
+    # _juce_add_resources_rc(${target} ${target})
+endfunction()
+
 # ==================================================================================================
 
 function(_juce_target_args_from_plugin_characteristics out_var)
